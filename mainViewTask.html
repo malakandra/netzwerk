@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="taskMainView">
+    
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js"></script>
+        <script src="taskAdminView.js"></script>
+        <script src="generateId.js"></script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="netzwerk.css"></link>
+    </head>
+    
+    <body>
+        <div class="row" ng-controller="TaskMainViewCtrl">
+            <div class="span4 offset2">
+                <h2>{{taskListName}}</h2>
+                <ul class="unstyled">
+                    <li ng-repeat="task in tasks">Id: {{task.id}}
+                        <span class="pull-right">
+                            <a href="#/tasks/{{task.id}}"><i class="icon-edit"></i></a>
+                            <a href="" ng-click="deleteTask(task.id)"><i class="icon-remove"></i></a>
+                        </span>
+                        <br>{{task.name}}
+                        <hr>
+                    </li>
+                </ul>
+            </div>
+            <div class="span4 offset2">
+                <div ng-view></div>
+            </div>
+        </div>
+    </body>
+
+</html>

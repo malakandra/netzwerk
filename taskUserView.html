@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="taskUserView">
+    
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js"></script>
+        <script src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
+        <script src="generateId.js"></script>
+        <script src="taskUserView.js"></script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="netzwerk.css"></link>
+    </head>
+    
+    <body>
+        <div ng-controller="TaskUserViewCtrl">
+            <div class="row">
+                <div class="span4 offset2">
+                    <dl>
+                        <div ng-repeat="task in tasks">
+                            <dt>{{task.name}}</dt>
+                            <dd>{{task.description}}</dd>
+                            <hr/>
+                        </div>
+                    </dl>
+                </div>
+                <div class="span4 offset2">
+                    <div ng-view></div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
