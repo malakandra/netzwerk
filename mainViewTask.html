@@ -2,9 +2,10 @@
 <html ng-app="taskMainView">
     
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-route.min.js"></script>
         <script src='https://cdn.firebase.com/v0/firebase.js'></script>
-        <script src="https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.js"></script>
         <script src="taskAdminView.js"></script>
         <script src="generateId.js"></script>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
@@ -16,10 +17,10 @@
             <div class="span4 offset2">
                 <h2>{{taskListName}}</h2>
                 <ul class="unstyled">
-                    <li ng-repeat="task in tasks">Id: {{task.id}}
+                    <li ng-repeat="(key, task) in tasks">Id: {{task.id}}
                         <span class="pull-right">
-                            <a href="#/tasks/{{task.id}}"><i class="icon-edit"></i></a>
-                            <a href="" ng-click="deleteTask(task.id)"><i class="icon-remove"></i></a>
+                            <a href="#/tasks/{{key}}"><i class="icon-edit"></i></a>
+                            <a href="" ng-click="deleteTask(key)"><i class="icon-remove"></i></a>
                         </span>
                         <br>{{task.name}}
                         <hr>

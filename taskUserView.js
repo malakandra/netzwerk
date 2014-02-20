@@ -29,3 +29,12 @@ function OfferTaskCtrl($scope, angularFireAuth, angularFire) {
 function RequireTaskCtrl($scope, angularFireAuth, angularFire) {
     
 }
+
+function offerTask(userTaskId, templateTaskId, userId, tasks) {
+    tasks[id] = {
+        userId : userId,
+        templateTaskId : templateTaskId,
+        id : userTaskId
+    }
+        
+}

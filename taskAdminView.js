@@ -1,6 +1,6 @@
 var url = "https://netzwerk.firebaseio.com/tasks";
 
-angular.module("taskMainView", ["firebase"], function($routeProvider) {
+angular.module("taskMainView", ["ngRoute", "firebase"], function($routeProvider) {
     $routeProvider.when("/tasks/new", {
         templateUrl: "newTask.html",
         controller: NewTaskCtrl
@@ -14,60 +14,50 @@ angular.module("taskMainView", ["firebase"], function($routeProvider) {
     });
 });
 
-function NewTaskCtrl($scope, angularFire) {
+function NewTaskCtrl($scope, $firebase) {
     $scope.name = "Neue Aufgabe";
     $scope.taskId = generateId();
 
     var firebase = new Firebase(url);
-    var promise = angularFire(firebase, $scope, "tasks", {});
-    promise.then(function() {
-        $scope.saveTask = function(name, description, id) {
-            saveTask(name, description, id, $scope.tasks);
-            $scope.taskId = generateId();
-            $scope.taskName = "";
-            $scope.taskDescription = "";
-        };
-    });
-}
-
-function DetailTaskCtrl($scope, $routeParams, angularFire) {
-    var firebase = new Firebase(url);
-    var promise = angularFire(firebase, $scope, "tasks", {});
-
-    promise.then(function() {
-        var $task = $scope.tasks[$routeParams.taskId];
-        $scope.taskName = $task.name;
-        $scope.name = $task.name
-        $scope.taskId = $task.id;
-        $scope.taskDescription = $task.description;
-        $scope.saveTask = function() {
-            saveTask($scope.taskName, $scope.taskDescription, $scope.taskId, $scope.tasks);
-        };
-        $scope.deleteTask = function() {
-            deleteTask($routeParams.taskId, $scope.tasks);
-        };
-    });
-}
-
-function TaskMainViewCtrl($scope, angularFire) {
-    var firebase = new Firebase(url);
-    $scope.taskListName = "Aufgaben"
-    var promise = angularFire(firebase, $scope, "tasks", {});
-    promise.then(function() {
-        $scope.deleteTask = function(id) {
-            deleteTask(id, $scope.tasks);
-        };
-    });
-}
-
-function saveTask(name, description, id, tasks) {
-    tasks[id] = {
-        name: name,
-        id: id,
-        description: description
+    $scope.tasks = $firebase(firebase);
+    $scope.saveTask = function(name, description, id) {
+        saveTask(name, description, id, $scope.tasks);
+        $scope.taskId = generateId();
+        $scope.taskName = "";
+        $scope.taskDescription = "";
     };
 }
 
-function deleteTask(id, tasks) {
-    delete tasks[id];
+function DetailTaskCtrl($scope, $routeParams, $firebase) {
+    var firebase = new Firebase(url + $routeParams.taskId);
+    $scope.task = $firebase(firebase);
+
+    $scope.taskName = $task.name;
+    $scope.name = $task.name
+    $scope.taskId = $task.id;
+    $scope.taskDescription = $task.description;
+    $scope.saveTask = function() {
+        saveTask($scope.taskName, $scope.taskDescription, $scope.taskId, $scope.tasks);
+    };
+    $scope.deleteTask = $task.$remove();
+
+function TaskMainViewCtrl($scope, $firebase) {
+    var firebase = new Firebase(url);
+    $scope.taskListName = "Aufgaben"
+    $scope.tasks = $firebase(firebase);
+    $scope.deleteTask = function(key) {
+        deleteTask(key, $scope.tasks);
+    };
+}
+
+function saveTask(name, description, id, tasks) {
+    tasks.$add({
+        name: name,
+        id: id,
+        description: description
+    });
+}
+
+function deleteTask(key, tasks) {
+    tasks.$remove(key);
 }
