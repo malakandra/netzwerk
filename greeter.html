@@ -1,56 +1,39 @@
 <!DOCTYPE html>
 <html ng-app="greeter">
-    
-    <head>
-        <meta charset="UTF-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-route.js"></script>
-        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
-        <script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
-        <script src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
-        <script src="generateId.js"></script>
-        <script src="greeter.js"></script>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
-        <link rel="stylesheet" href="netzwerk.css"></link>
-    </head>
-    
-    <body>
-        <div class="row">
-            <div class="span10 offset2">
-                <div class="page-header">
-                    <h1>Willkommen im Gemeindenetzwerk!</h1>
-                </div>
-            </div>
-        </div>
-        <div ng-controller="GreeterMainViewCtrl">
-            <div class="row" ng-show="auth.user">
-                <div class="span10 offset2">
-                    <h3>Hallo, {{auth.user.email}}!</h3>
-                    Was möchtest du tun?
-                    <hr/>
-                    <dl>
-                        <dt><a ng-click="logout()" href="">Dich ausloggen</a></dt>
-                        <dd>Du möchtest diese Seite verlassen.</dd>
-                        <hr/>
-                        <dt><a href="taskUserView.html/{{auth.user.id}}/tasks/require">Bedarf anmelden</a></dt>
-                        <dd>Du brauchst umgehend Hilfe bei einer Aufgabe.</dd>
-                        <hr/>
-                        <dt><a href="taskUserView.html/{{auth.user.id}}/tasks/seeRequired">Bedarfe sehen</a></dt>
-                        <dd>Du möchtest sehen, wer zur Zeit Hilfe benötigt.</dd>
-                        <hr/>
-                        <dt><a href="taskUserView.html/{{auth.user.id}}/tasks/offer">Aufgaben anbieten</a></dt>
-                        <dd>Du möchtest ankündigen, dass du Aufgaben entgegennehmen kannst.</dd>
-                        <hr/>
-                        <dt><a href="taskUserView.html/{{auth.user.id}}/tasks/seeOffered">Angebote sehen</a></dt>
-                        <dd>Du möchtest sehen, welche Angebote bereits vorhanden sind.</dd>
-                        <hr/>
-                    </dl>
-                </div>
-            </div>
-            <div class="row" ng-hide="auth.user">
-                <div ng-view />
-            </div>
-        </div>
-    </body>
+
+<head>
+<meta charset="UTF-8">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-route.js"></script>
+<script src='https://cdn.firebase.com/v0/firebase.js'></script>
+<script
+	src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
+<script src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
+<script src="generateId.js"></script>
+<script src="greeter.js"></script>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="netzwerk.css"></link>
+</head>
+
+<body>
+	<div class="row">
+		<div class="span10 offset2">
+			<div class="page-header">
+				<h1>Willkommen im Gemeindenetzwerk!</h1>
+			</div>
+		</div>
+	</div>
+	<div ng-controller="GreeterMainViewCtrl">
+		<div class="row" ng-show="loggedIn()">
+			<div class="span10 offset2">
+				<h3>Hallo, {{getUser().email}}!</h3>
+				<a href="" ng-click="logout()">Ausloggen</a>
+			</div>
+		</div>
+		<div ng-view />
+	</div>
+</body>
 
 </html>

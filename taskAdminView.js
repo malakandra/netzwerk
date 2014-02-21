@@ -1,17 +1,19 @@
-var url = 'https://netzwerk.firebaseio.com/tasks';
+'use strict';
+
+var url = 'https://netzwerk.firebaseio.com/templates';
 
 var app = angular.module('taskMainView', [ 'ngRoute', 'firebase' ], function(
 		$routeProvider) {
-	$routeProvider.when('/tasks/new', {
-		templateUrl : 'newTask.html',
+	$routeProvider.when('/templates/new', {
+		templateUrl : 'newTemplate.html',
 		controller : NewTaskCtrl
 	});
-	$routeProvider.when('/tasks/:taskId', {
-		templateUrl : 'detailTask.html',
+	$routeProvider.when('/templates/:taskId', {
+		templateUrl : 'detailTemplate.html',
 		controller : DetailTaskCtrl
 	});
 	$routeProvider.otherwise({
-		redirectTo : '/tasks/new'
+		redirectTo : '/templates/new'
 	});
 });
 
