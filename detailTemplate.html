@@ -1,0 +1,26 @@
+<h2>{{task.name}}</h2>
+<div class="framedform">
+    <div class="control-group">
+        <label for="taskId" class="control-label">Id</label>
+        <div class="controls">
+            <span class="uneditable-input" id="taskId">{{task.id}}</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label for="taskName" class="control-label">Name</label>
+        <div class="controls">
+            <input type="text" id="taskName" ng-model="task.name">
+        </div>
+    </div>
+    <div class="control-group">
+        <label for="taskDescription" class="control-label">Beschreibung</label>
+        <div class="controls">
+            <textarea id="taskDescription" ng-model="task.description" rows=5></textarea>
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-primary" ng-click="saveTask()">Save</button>
+        <a class="btn btn-danger" href="#/tasks/new" ng-click="deleteTask()">Delete</a>
+        <a class="btn" href="#/tasks/new">Cancel</a>
+    </div>
+</div>

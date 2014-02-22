@@ -6,11 +6,13 @@ var taskUrl = url + '/tasks';
 angular.module('greeter', [ 'ngRoute', 'firebase' ], function($routeProvider) {
 	$routeProvider.when('/register', {
 		templateUrl : 'register.html',
-		controller : RegisterCtrl
+		controller : RegisterCtrl,
+		unAuthAllowed : true
 	});
 	$routeProvider.when('/login', {
 		templateUrl : 'login.html',
-		controller : LoginCtrl
+		controller : LoginCtrl,
+		unAuthAllowed : true
 	});
 	$routeProvider.when('/newTask', {
 		templateUrl : 'newTask.html',
@@ -20,7 +22,7 @@ angular.module('greeter', [ 'ngRoute', 'firebase' ], function($routeProvider) {
 		templateUrl : 'newTask.html',
 		controller : NewTaskCtrl
 	});
-}).factory('Auth', function($firebaseSimpleLogin, $rootScope) {
+}).factory('Auth', function($firebaseSimpleLogin, $rootScope, $location) {
 	var authbase = new Firebase(url);
 	var auth = $firebaseSimpleLogin(authbase);
 
@@ -33,6 +35,11 @@ angular.module('greeter', [ 'ngRoute', 'firebase' ], function($routeProvider) {
 		},
 		logout : function() {
 			auth.$logout();
+			// after having logged out the user, wait for the user object to
+			// update and redirect the user afterwards.
+			auth.$getCurrentUser().then(function() {
+				$location.path('/login');
+			});
 		},
 		login : function(username, password) {
 			return auth.$login('password', {
@@ -50,14 +57,13 @@ angular.module('greeter', [ 'ngRoute', 'firebase' ], function($routeProvider) {
 
 	return Auth;
 }).run(function($rootScope, $location, Auth) {
-	$rootScope.$on('$firebaseSimpleLogin:logout', function() {
-		$location.path('/login');
-	});
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
 		console.log("changing route");
-		console.log(Auth.getUser());
-		if (!Auth.loggedIn()) {
-			$location.path('/login');
+		if (!next.unAuthAllowed) {
+			console.log(Auth.getUser());
+			if (!Auth.loggedIn()) {
+				$location.path('/login');
+			}
 		}
 	});
 });
@@ -65,8 +71,6 @@ angular.module('greeter', [ 'ngRoute', 'firebase' ], function($routeProvider) {
 function GreeterMainViewCtrl($scope, $location, $firebase, Auth) {
 	$scope.logout = function() {
 		Auth.logout();
-		console.log('logging out...');
-		$location.path('/login');
 	};
 	$scope.getUser = function() {
 		return Auth.getUser();
