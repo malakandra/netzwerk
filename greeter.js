@@ -1,66 +1,28 @@
 'use strict';
-
 var url = 'https://netzwerk.firebaseio.com';
-var taskUrl = url + '/tasks';
-
-angular.module('greeter', [ 'ngRoute', 'firebase' ], function($routeProvider) {
-	$routeProvider.when('/register', {
-		templateUrl : 'register.html',
-		controller : RegisterCtrl,
-		unAuthAllowed : true
-	});
-	$routeProvider.when('/login', {
-		templateUrl : 'login.html',
-		controller : LoginCtrl,
-		unAuthAllowed : true
-	});
-	$routeProvider.when('/newTask', {
-		templateUrl : 'newTask.html',
-		controller : NewTaskCtrl
-	});
-	$routeProvider.otherwise({
-		templateUrl : 'newTask.html',
-		controller : NewTaskCtrl
-	});
-}).factory('Auth', function($firebaseSimpleLogin, $rootScope, $location) {
-	var authbase = new Firebase(url);
-	var auth = $firebaseSimpleLogin(authbase);
-
-	var Auth = {
-		register : function(email, password) {
-			return auth.$createUser(email, password);
-		},
-		loggedIn : function() {
-			return auth.user != null;
-		},
-		logout : function() {
-			auth.$logout();
-			// after having logged out the user, wait for the user object to
-			// update and redirect the user afterwards.
-			auth.$getCurrentUser().then(function() {
-				$location.path('/login');
+var netzwerk = angular.module('netzwerk', [ 'ngRoute', 'firebase' ],
+		function($routeProvider) {
+			$routeProvider.when('/register', {
+				templateUrl : 'register.html',
+				controller : RegisterCtrl,
+				unAuthAllowed : true
 			});
-		},
-		login : function(username, password) {
-			return auth.$login('password', {
-				email : username,
-				password : password
+			$routeProvider.when('/login', {
+				templateUrl : 'login.html',
+				controller : LoginCtrl,
+				unAuthAllowed : true
 			});
-		},
-		getUser : function() {
-			return auth.user;
-		}
-	};
-	$rootScope.loggedIn = function() {
-		return Auth.loggedIn();
-	};
-
-	return Auth;
-}).run(function($rootScope, $location, Auth) {
+			$routeProvider.when('/newTask', {
+				templateUrl : 'newTask.html',
+				controller : NewTaskCtrl
+			});
+			$routeProvider.otherwise({
+				templateUrl : 'newTask.html',
+				controller : NewTaskCtrl
+			});
+		}).run(function($rootScope, $location, Auth) {
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
-		console.log("changing route");
 		if (!next.unAuthAllowed) {
-			console.log(Auth.getUser());
 			if (!Auth.loggedIn()) {
 				$location.path('/login');
 			}
@@ -68,35 +30,54 @@ angular.module('greeter', [ 'ngRoute', 'firebase' ], function($routeProvider) {
 	});
 });
 
-function GreeterMainViewCtrl($scope, $location, $firebase, Auth) {
+function GreeterMainViewCtrl($scope, $location, $firebase, Auth, Tasks) {
 	$scope.logout = function() {
 		Auth.logout();
 	};
 	$scope.getUser = function() {
 		return Auth.getUser();
 	};
-	var taskbase = new Firebase(taskUrl);
-	$scope.tasks = $firebase(taskbase);
+	$scope.tasks = Tasks.getTasks();
+	$scope.getVerb = function(isOffer) {
+		if (isOffer) {
+			return "bietet";
+		} else {
+			return "sucht";
+		}
+	};
 }
 
-function NewTaskCtrl($scope, $rootScope, $firebase) {
-
+function NewTaskCtrl($scope, $rootScope, $firebase, Tasks, Auth) {
+	$scope.saveTask = function() {
+		Tasks.addTask({
+			name : $scope.taskName,
+			description : $scope.taskDescription,
+			isOffer : $scope.isOffer,
+			email : Auth.getUser().email
+		});
+	};
+	$scope.isOffer = true;
+	$scope.setOffer = function(isOffer) {
+		$scope.isOffer = isOffer;
+	};
 }
 
-function RegisterCtrl($scope, $location, $rootScope, $firebaseSimpleLogin,
-		$firebase) {
-	var firebase = new Firebase(url);
-	$rootScope.auth = $firebaseSimpleLogin(firebase);
+function RegisterCtrl($scope, $location, $firebase, Auth) {
+	if (Auth.loggedIn()) {
+		$location.path('/');
+	}
+	$scope.$on('$firebaseSimpleLogin:login', function() {
+		$location.path('/');
+	});
 	$scope.register = function(username, password, confirmpassword) {
 		if (password != confirmpassword) {
 			$scope.errormsg = 'Passwörter stimmen nicht überein!';
 		} else {
-			$rootScope.auth.$createUser(username, password, false);
+			Auth.register(username, password, false).then(function(user) {
+			}, function(evt, err) {
+				$scope.errormsg = "Registrieren fehlgeschlagen!";
+			});
 		}
-		;
-		$rootScope.$on('$firebaseSimpleLogin:error', function(e, err) {
-			$scope.errormsg = "Registrieren fehlgeschlagen!";
-		});
 	};
 }
 

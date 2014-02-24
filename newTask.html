@@ -1,1 +1,29 @@
-<h1>Neue Aufgabe</h1>
+<h2>Neue Aufgabe</h2>
+<div class="framedform">
+	<form class="">
+		<div class="control-group">
+			<label for="offer">Art</label>
+			<div class="controls">
+				<div class="btn-group" id="offer" data-toggle="buttons-radio">
+					<button type="button" class="btn" ng-class="{active: isOffer}"
+						ng-click="setOffer(true)">Biete</button>
+					<button type="button" class="btn" ng-class="{active: !isOffer}"
+						ng-click="setOffer(false)">Suche</button>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="taskName" class="control-label">Name</label>
+			<div class="controls">
+				<input type="text" id="taskName" ng-model="taskName">
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="taskDescription" class="control-label">Beschreibung</label>
+			<div class="controls">
+				<textarea id="taskDescription" ng-model="taskDescription" rows=5></textarea>
+			</div>
+		</div>
+		<button class="btn btn-primary" ng-click="saveTask()">Add</button>
+	</form>
+</div>

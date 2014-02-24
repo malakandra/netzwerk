@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="greeter">
+<html ng-app="netzwerk">
 
 <head>
 <meta charset="UTF-8">
@@ -13,6 +13,10 @@
 <script src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
 <script src="generateId.js"></script>
 <script src="greeter.js"></script>
+<script src="auth.js"></script>
+<script src="tasks.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
 <link rel="stylesheet" href="netzwerk.css"></link>
 </head>
@@ -32,7 +36,18 @@
 				<a href="" ng-click="logout()">Ausloggen</a>
 			</div>
 		</div>
-		<div ng-view />
+		<div class="span4 offset2">
+			<ul class="unstyled">
+				<li ng-repeat="(key, task) in tasks"><a
+					href="mailto:{{task.email}}">{{task.email}}</a>
+					{{getVerb(task.isOffer)}} <br /> <strong>{{task.name}}</strong> <br />
+					{{task.description}}
+					<hr /></li>
+			</ul>
+		</div>
+		<div class="span4 offset2">
+			<div ng-view />
+		</div>
 	</div>
 </body>
 
