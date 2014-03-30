@@ -47,10 +47,14 @@ function GreeterMainViewCtrl($scope, $location, $firebase, Auth, Tasks) {
 	};
 }
 
-function NewTaskCtrl($scope, $rootScope, $firebase, Tasks, Auth) {
+function NewTaskCtrl($scope, $rootScope, $firebase, Tasks, Auth, Templates) {
+	var templates = Templates.getTemplates();
+	templates.$on("loaded", function() {
+		$scope.templates = templates;
+	});
 	$scope.saveTask = function() {
 		Tasks.addTask({
-			name : $scope.taskName,
+			name : $scope.template.name,
 			description : $scope.taskDescription,
 			isOffer : $scope.isOffer,
 			email : Auth.getUser().email

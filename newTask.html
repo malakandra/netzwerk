@@ -15,7 +15,8 @@
 		<div class="control-group">
 			<label for="taskName" class="control-label">Name</label>
 			<div class="controls">
-				<input type="text" id="taskName" ng-model="taskName">
+				<select id="taskName" ng-model="template" ng-options="t.name for t in templates | orderByPriority">
+				</select>
 			</div>
 		</div>
 		<div class="control-group">
