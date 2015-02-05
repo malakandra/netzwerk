@@ -9,6 +9,9 @@ netzwerk.factory('Auth', function($firebaseSimpleLogin, $rootScope, $location) {
 		loggedIn : function() {
 			return auth.user != null;
 		},
+		isAdmin : function() {
+			return auth.user != null && auth.user.email == 'ferdinand.szekeresch@gmail.com';
+		},
 		logout : function() {
 			auth.$logout();
 			// after having logged out the user, wait for the user object to
@@ -29,6 +32,9 @@ netzwerk.factory('Auth', function($firebaseSimpleLogin, $rootScope, $location) {
 	};
 	$rootScope.loggedIn = function() {
 		return Auth.loggedIn();
+	};
+	$rootScope.isAdmin = function() {
+		return Auth.loggedIn() && Auth.isAdmin();
 	};
 
 	return Auth;

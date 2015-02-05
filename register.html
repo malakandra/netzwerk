@@ -1,27 +1,28 @@
-<div class="span4 offset4">
-    <div class="framedform">
-        <form action="">
-            <div class="alert alert-error" ng-show="errormsg">{{errormsg}}</div>
-            <div class="control-group">
-                <label for="email">Email Adresse</label>
-                <div class="controls">
-                    <input type="text" id="email" ng-model="email">
-                </div>
-            </div>
-            <div class="control-group">
-                <label for="password">Passwort</label>
-                <div class="controls">
-                    <input type="password" id="password" ng-model="password">
-                </div>
-            </div>
-            <div class="control-group">
-                <label for="confirmpassword">Passwort best&auml;tigen</label>
-                <div class="controls">
-                    <input type="password" id="confirmpassword" ng-model="confirmpassword">
-                </div>
-            </div>
-            <button class="btn btn-primary" ng-click="register(email, password, confirmpassword)">Registrieren</button>
-            <a class="btn" href="#/login">Abbrechen</a>
-        </form>
-    </div>
+
+<div class="framedform">
+	<form action="">
+		<div class="alert alert-error" ng-show="errormsg">{{errormsg}}</div>
+		<div class="control-group">
+			<label for="email">Email Adresse</label>
+			<div class="controls">
+				<input type="text" id="email" ng-model="email">
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="password">Passwort</label>
+			<div class="controls">
+				<input type="password" id="password" ng-model="password">
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="confirmpassword">Passwort best&auml;tigen</label>
+			<div class="controls">
+				<input type="password" id="confirmpassword"
+					ng-model="confirmpassword">
+			</div>
+		</div>
+		<button class="btn btn-primary"
+			ng-click="register(email, password, confirmpassword)">Registrieren</button>
+		<a class="btn" href="#/login">Abbrechen</a>
+	</form>
 </div>

@@ -1,13 +1,17 @@
 netzwerk.factory("Tasks", function($firebase) {
 	var taskUrl = url + '/tasks';
 	var taskbase = new Firebase(taskUrl);
-	var tasks = $firebase(taskbase);
+	var allTasks = $firebase(taskbase);
 	var Tasks = {
+		getMyTasks : function () {
+//		    var myTasks = $firebase(taskbase.orderByChild('email').equalTo("johannes@gemeinde.de")).$asArray();
+		    return allTasks;
+		},
 		getTasks : function() {
-			return tasks;
+			return allTasks;
 		},
 		addTask : function(task) {
-			tasks.$add(task);
+			allTasks.$add(task);
 		}
 	};
 	return Tasks;

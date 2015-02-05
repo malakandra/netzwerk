@@ -37,7 +37,7 @@ function GreeterMainViewCtrl($scope, $location, $firebase, Auth, Tasks) {
 	$scope.getUser = function() {
 		return Auth.getUser();
 	};
-	$scope.tasks = Tasks.getTasks();
+	$scope.tasks = Tasks.getMyTasks();
 	$scope.getVerb = function(isOffer) {
 		if (isOffer) {
 			return "bietet";

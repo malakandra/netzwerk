@@ -35,6 +35,6 @@ function offerTask(userTaskId, templateTaskId, userId, tasks) {
         userId : userId,
         templateTaskId : templateTaskId,
         id : userTaskId
-    }
+    };
         
 }
