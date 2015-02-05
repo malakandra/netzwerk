@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html ng-app="netzwerk">
 
 <head>
@@ -21,13 +22,76 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
 <link rel="stylesheet" href="netzwerk.css"></link>
+<script type="text/javascript" src="TacoComponents/MooTools/mootools.js"></script>
+<script type="text/javascript" src="TacoComponents/MenuMatic/MenuMatic.js"></script>
+<link rel="stylesheet" type="text/css" href="TacoComponents/MenuMatic/MenuMatic_myNavigationMenu.css" />
+<link rel="stylesheet" type="text/css" href="TacoComponents/MenuMatic/MenuMatic_FooterMenue.css" />
 </head>
 
 <body>
 	<div class="row">
 		<div class="span9 offset2">
 			<div class="page-header">
-				<h2>Willkommen im Gemeindenetzwerk der Ev. Kirchengemeinde!</h2>
+				<h2>Willkommen im Gemeindenetzwerk der <br />Ev. Kirchengemeinde K&ouml;nigsbach!</h2>
+					<br /> 				
+				<!-- BEGIN COMPONENT Navigation Menu - Taco HTML Edit -->
+				<!--  
+				For Navigation Menu to appear correctly in Internet Explorer, make sure that you have a valid
+				doctype declaration at the beginning of your document such as:
+				<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN" "http://www.w3.org/TR/html4/loose.dtd">
+				-->
+				<ul id="myNavigationMenu">
+					<li><a href="#">SUCHE Unterst&uuml;tzung</a>
+						<ul>
+							<li><a href="#">Haushalt</a></li>
+							<li><a href="#">Handwerk</a></li>
+							<li><a href="#">Einkauf</a></li>
+							<li><a href="#">Nachhilfe</a></li>
+							<li><a href="#">...</a></li>
+						</ul>
+					</li>
+					<li><a href="#">BIETE Unterst&uuml;tzung</a>
+						<ul>
+							<li><a href="#">Haushalt</a></li>
+							<li><a href="#">Handwerk</a></li>
+							<li><a href="#">Einkauf</a></li>
+							<li><a href="#">Nachhilfe</a></li>
+							<li><a href="#">...</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Anleitung und Hilfe</a>
+						<ul>
+							<li><a href="#">Hilfe</a></li>
+							<li><a href="#">Beispiele</a></li>
+							<li><a href="#">H&auml;ufige Fragen</a></li>
+							<li><a href="files/flyer_innen.pdf">Flyer weitergeben</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Mein Profil</a>
+						<ul>
+							<li><a href="#">Anzeigen</a></li>
+							<li><a href="#">Bearbeiten</a></li>
+							<li><a href="#">Punktestand</a></li>
+						</ul>
+					</li>
+				</ul>
+				<br />
+				<br /> 
+				<!-- Create a MenuMatic Instance -->
+				<script type="text/javascript" >
+					window.addEvent('load', function() {			
+						var myMenu = new MenuMatic({
+							id: 'myNavigationMenu',
+							subMenusContainerId: 'myNavigationMenu_menuContainer',
+							orientation: 'horizontal',
+							effect: 'slide & fade', 
+							duration: 800, 
+							hideDelay: 1000,
+							opacity: 100});
+					});		
+				</script>
+				
+				<!-- END COMPONENT Navigation Menu - Taco HTML Edit -->
 			</div>
 		</div>
 		<div ng-controller="GreeterMainViewCtrl" ng-show="loggedIn()">
@@ -55,7 +119,35 @@
 				</ul>
 			</div>
 			<div class="span4 offset1" ng-view />
-		</div>
+		</div>	
+	</div>
+	<div class="row">			
+		<!-- BEGIN COMPONENT Navigation Menu - Taco HTML Edit -->
+		<!--  
+		For Navigation Menu to appear correctly in Internet Explorer, make sure that you have a valid
+		doctype declaration at the beginning of your document such as:
+		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN" "http://www.w3.org/TR/html4/loose.dtd">
+		-->
+		<ul id="FooterMenue">
+			<li><a href="#">© 2015 EKK</a></li>
+			<li><a href="#">Impressum</a></li>
+			<li><a href="#">Kontakt</a></li>
+		</ul>
+		<!-- Create a MenuMatic Instance -->
+		<script type="text/javascript" >
+			window.addEvent('load', function() {			
+				var myMenu = new MenuMatic({
+					id: 'FooterMenue',
+					subMenusContainerId: 'FooterMenue_menuContainer',
+					orientation: 'horizontal',
+					effect: null, 
+					duration: 800, 
+					hideDelay: 1000,
+					opacity: 100});
+			});		
+		</script>
+		
+		<!-- END COMPONENT Navigation Menu - Taco HTML Edit -->
 	</div>
 </body>
 
